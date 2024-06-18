@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "505379776514",
+    "project_id": "jord-310ad",
+    "storage_bucket": "jord-310ad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505379776514:android:5a39a8eeb2a7941c389f1b",
+        "android_client_info": {
+          "package_name": "com.m4rcusml.jord"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "505379776514-nihbkrjtv3l8fbacotsl803mp4sirktt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzmghmRh2G6yIpyE2Khuw0Vc1Hc1R1ltM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "505379776514-nihbkrjtv3l8fbacotsl803mp4sirktt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
