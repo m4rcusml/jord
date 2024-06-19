@@ -12,12 +12,7 @@
           "package_name": "com.m4rcusml.jord"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "505379776514-nihbkrjtv3l8fbacotsl803mp4sirktt.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
           "current_key": "AIzaSyDzmghmRh2G6yIpyE2Khuw0Vc1Hc1R1ltM"
@@ -27,7 +22,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "505379776514-nihbkrjtv3l8fbacotsl803mp4sirktt.apps.googleusercontent.com",
+              "client_id": "505379776514-4e2eqa0795478cq0m1mmdkjv0v53t39r.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

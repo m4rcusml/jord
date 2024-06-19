@@ -23,7 +23,8 @@ const SignupFormSchema = z.object({
 type SignupForm = z.infer<typeof SignupFormSchema>;
 
 GoogleSignin.configure({
-  scopes: ['email', 'profile']
+  scopes: ['email', 'profile'],
+  webClientId: '227858259368-s0ojvq8jufo8oja1gg0aivuendejjqj6.apps.googleusercontent.com'
 });
 
 export function Signup() {

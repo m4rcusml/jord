@@ -1,6 +1,6 @@
 import { Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { AuthRoutesType } from "../../../routes/auth.routes";
 
@@ -21,7 +21,8 @@ const LoginFormSchema = z.object({
 type LoginForm = z.infer<typeof LoginFormSchema>;
 
 GoogleSignin.configure({
-  scopes: ['email', 'profile']
+  scopes: ['email', 'profile'],
+  webClientId: '227858259368-s0ojvq8jufo8oja1gg0aivuendejjqj6.apps.googleusercontent.com'
 });
 
 export function Login() {
@@ -33,6 +34,7 @@ export function Login() {
 
   async function loginWithGoogle() {
     try {
+      GoogleSignin.hasPlayServices();
       const { idToken } = await GoogleSignin.signIn();
       auth().signInWithCredential(auth.GoogleAuthProvider.credential(idToken))
     } catch (error) {
