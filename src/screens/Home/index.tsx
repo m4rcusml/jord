@@ -2,15 +2,15 @@ import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export function Home() {
-    return (
-        <SafeAreaView style={styles.container}>
+  return (
+    <SafeAreaView style={styles.container}>
 
-        </SafeAreaView>
-    )
+    </SafeAreaView>
+  )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
+  container: {
+    flex: 1,
+  },
 })
