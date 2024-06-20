@@ -31,22 +31,32 @@ GoogleSignin.configure({
 export function Signup() {
   const [isLoading, setIsLoading] = useState(false);
   const { navigate } = useNavigation<NavigationProp<AuthRoutesType>>();
-  const { handleSubmit, control, formState: { errors } } = useForm<SignupForm>({
+  const { handleSubmit, control, formState: { errors }, getValues } = useForm<SignupForm>({
     resolver: zodResolver(SignupFormSchema),
     mode: 'onChange',
   });
 
-  async function loginWithGoogle() {
+  function loginWithGoogle() {
     try {
       GoogleSignin.hasPlayServices();
-      const { idToken } = await GoogleSignin.signIn();
-      auth().signInWithCredential(auth.GoogleAuthProvider.credential(idToken))
+      GoogleSignin.signIn().then((googleCredentials) => {
+        auth().signInWithCredential(auth.GoogleAuthProvider.credential(googleCredentials.idToken))
+          .then(credentials => {
+            if (GoogleSignin.hasPreviousSignIn()) return
+            database()
+              .ref(`/users/${credentials.user.uid}`)
+              .set({
+                username: googleCredentials.user.name || googleCredentials.user.givenName,
+              })
+              .then(() => console.log('Data set.'));
+          });
+      });
     } catch (error) {
       console.log(error);
     }
   };
 
-  async function handleSignup({ username, email, password }: SignupForm) {
+  function handleSignup({ username, email, password }: SignupForm) {
     try {
       setIsLoading(true);
       auth().createUserWithEmailAndPassword(email, password).then(credentials => {
@@ -57,7 +67,6 @@ export function Signup() {
           })
           .then(() => console.log('Data set.'));
       });
-
     } catch (error) {
       console.log(error);
       setIsLoading(false);
@@ -95,6 +104,7 @@ export function Signup() {
             control={control}
             render={({ field: { onChange, value } }) => (
               <TextInput
+                autoCapitalize='none'
                 value={value}
                 style={styles.input}
                 onChangeText={onChange}
@@ -110,6 +120,7 @@ export function Signup() {
             control={control}
             render={({ field: { onChange, value } }) => (
               <TextInput
+                autoCapitalize='none'
                 value={value}
                 style={styles.input}
                 onChangeText={onChange}

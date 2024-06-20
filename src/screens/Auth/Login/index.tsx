@@ -72,6 +72,7 @@ export function Login() {
             control={control}
             render={({ field: { onChange, value } }) => (
               <TextInput
+                autoCapitalize='none'
                 value={value}
                 style={styles.input}
                 onChangeText={onChange}
@@ -87,6 +88,7 @@ export function Login() {
             control={control}
             render={({ field: { onChange, value } }) => (
               <TextInput
+                autoCapitalize='none'
                 value={value}
                 style={styles.input}
                 onChangeText={onChange}

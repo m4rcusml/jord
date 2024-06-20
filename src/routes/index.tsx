@@ -8,7 +8,7 @@ export function Routes() {
   const [user, setUser] = useState<FirebaseAuthTypes.User | null>(null);
 
   auth().onAuthStateChanged(user => {
-    console.log(user?.providerData)
+    setUser(user);
   });
 
   return user ? <AppRoutes /> : <AuthRoutes />
