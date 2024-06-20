@@ -15,7 +15,7 @@ export function AppRoutes() {
       { text: 'Não' },
       {
         text: 'Sim', onPress: () => {
-          auth().currentUser?.providerId === 'google.com'
+          auth().currentUser?.providerData[0].providerId === 'google.com'
             ?
             GoogleSignin.revokeAccess().then(() => {
               GoogleSignin.signOut();

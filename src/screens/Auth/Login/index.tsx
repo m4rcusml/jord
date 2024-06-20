@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ActivityIndicator, Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -42,6 +42,7 @@ export function Login() {
       auth().signInWithCredential(auth.GoogleAuthProvider.credential(idToken))
     } catch (error) {
       console.log(error);
+      Alert.alert('Ocorreu um erro', 'Tente novamente mais tarde.')
       setIsLoading(false);
     }
   };
@@ -52,6 +53,7 @@ export function Login() {
       await auth().signInWithEmailAndPassword(email, password);
     } catch (error) {
       console.log(error);
+      Alert.alert('Ocorreu um erro', 'Tente novamente mais tarde.')
       setIsLoading(false);
     }
   }

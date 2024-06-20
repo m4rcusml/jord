@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ActivityIndicator, Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Alert, Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
@@ -12,11 +12,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 
 import Logo from '../../../assets/logo.png';
-import GoogleLogo from '../../../assets/google-logo.png';
 
 const PasswordResetFormSchema = z.object({
   email: z.string({ message: 'Campo obrigatório' }).email('Insira um email válido'),
-  password: z.string({ message: 'Campo obrigatório' }).min(0, 'Insira sua senha'),
 });
 
 type PasswordResetForm = z.infer<typeof PasswordResetFormSchema>;
@@ -34,10 +32,21 @@ export function PasswordReset() {
     mode: 'onChange',
   });
 
-  async function handleResetPassword({ email }: PasswordResetForm) {
+  function handleResetPassword({ email }: PasswordResetForm) {
     try {
       setIsLoading(true);
-      await auth().sendPasswordResetEmail(email);
+      auth().sendPasswordResetEmail(email)
+      .then(() => {
+        Alert.alert(
+          'Redefinir senha',
+          'Um link de redefinição de senha foi enviado para o seu email com sucesso.',
+          [{ text: 'Ok', onPress: goBack }]
+        );
+      })
+      .catch(error => {
+        console.log(error);
+        setIsLoading(false);
+      });
     } catch (error) {
       console.log(error);
       setIsLoading(false);
