@@ -6,7 +6,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { AuthRoutesType } from '../../../routes/auth.routes';
 
 import auth from '@react-native-firebase/auth';
-import database from '@react-native-firebase/database';
+import database, { firebase } from '@react-native-firebase/database';
 
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -30,8 +30,7 @@ GoogleSignin.configure({
 
 export function Signup() {
   const [isLoading, setIsLoading] = useState(false);
-  const { navigate } = useNavigation<NavigationProp<AuthRoutesType>>();
-  const { handleSubmit, control, formState: { errors }, getValues } = useForm<SignupForm>({
+  const { handleSubmit, control, formState: { errors } } = useForm<SignupForm>({
     resolver: zodResolver(SignupFormSchema),
     mode: 'onChange',
   });
@@ -41,15 +40,14 @@ export function Signup() {
       GoogleSignin.hasPlayServices();
       GoogleSignin.signIn().then((googleCredentials) => {
         auth().signInWithCredential(auth.GoogleAuthProvider.credential(googleCredentials.idToken))
-          .then(credentials => {
-            if (GoogleSignin.hasPreviousSignIn()) return
-            database()
-              .ref(`/users/${credentials.user.uid}`)
-              .set({
-                username: googleCredentials.user.name || googleCredentials.user.givenName,
-              })
-              .then(() => console.log('Data set.'));
-          });
+          .then(() => {
+            database().ref('users/').push({
+              username: 'Nome legal'
+            })
+    
+            console.log('Data set.');
+          })
+          .catch(error => console.log(error));
       });
     } catch (error) {
       console.log(error);
@@ -60,12 +58,11 @@ export function Signup() {
     try {
       setIsLoading(true);
       auth().createUserWithEmailAndPassword(email, password).then(credentials => {
-        database()
-          .ref(`/users/${credentials.user.uid}`)
-          .set({
-            username,
-          })
-          .then(() => console.log('Data set.'));
+        database().ref('/users/').push({
+          username
+        })
+
+        console.log('Data set.');
       });
     } catch (error) {
       console.log(error);

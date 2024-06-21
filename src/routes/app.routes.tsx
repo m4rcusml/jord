@@ -17,9 +17,9 @@ export function AppRoutes() {
         text: 'Sim', onPress: () => {
           auth().currentUser?.providerData[0].providerId === 'google.com'
             ?
-            GoogleSignin.revokeAccess().then(() => {
+            auth().signOut().then(() => {
+              GoogleSignin.revokeAccess();
               GoogleSignin.signOut();
-              auth().signOut();
             })
             :
             auth().signOut();
