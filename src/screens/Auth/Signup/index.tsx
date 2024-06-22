@@ -2,11 +2,9 @@ import { useState } from 'react';
 import { ActivityIndicator, Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { GoogleSignin, statusCodes } from '@react-native-google-signin/google-signin';
-import { NavigationProp, useNavigation } from '@react-navigation/native';
-import { AuthRoutesType } from '../../../routes/auth.routes';
 
 import auth from '@react-native-firebase/auth';
-import database, { firebase } from '@react-native-firebase/database';
+import firestore from '@react-native-firebase/firestore';
 
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -37,20 +35,24 @@ export function Signup() {
 
   function loginWithGoogle() {
     try {
+      setIsLoading(true);
       GoogleSignin.hasPlayServices();
       GoogleSignin.signIn().then((googleCredentials) => {
         auth().signInWithCredential(auth.GoogleAuthProvider.credential(googleCredentials.idToken))
           .then(() => {
-            database().ref('users/').push({
-              username: 'Nome legal'
-            })
-    
-            console.log('Data set.');
+            firestore().collection('users')
+              .add({
+                name: googleCredentials.user.name,
+              })
+              .then(() => {
+                console.log('User added!');
+              });
           })
           .catch(error => console.log(error));
       });
     } catch (error) {
       console.log(error);
+      setIsLoading(false);
     }
   };
 
@@ -58,11 +60,13 @@ export function Signup() {
     try {
       setIsLoading(true);
       auth().createUserWithEmailAndPassword(email, password).then(credentials => {
-        database().ref('/users/').push({
-          username
-        })
-
-        console.log('Data set.');
+        firestore().collection('users')
+          .add({
+            name: username,
+          })
+          .then(() => {
+            console.log('User added!');
+          });
       });
     } catch (error) {
       console.log(error);
@@ -130,12 +134,12 @@ export function Signup() {
       </KeyboardAvoidingView>
 
       <View style={{ gap: 20 }}>
-        <TouchableOpacity style={styles.button} onPress={handleSubmit(handleSignup)}>
+        <TouchableOpacity style={styles.button} onPress={handleSubmit(handleSignup)} disabled={isLoading}>
           <Text style={styles.text}>{isLoading ? <ActivityIndicator color='#02084B' /> : 'Criar conta'}</Text>
         </TouchableOpacity>
       </View>
 
-      <TouchableOpacity style={{ alignSelf: 'center' }} onPress={loginWithGoogle}>
+      <TouchableOpacity style={{ alignSelf: 'center' }} onPress={loginWithGoogle} disabled={isLoading}>
         <Image
           source={GoogleLogo}
           style={{ width: 32, height: 32 }}
