@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { ActivityIndicator, Alert, Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { AuthRoutesType } from '../../../routes/auth.routes';
 
@@ -19,14 +18,9 @@ const PasswordResetFormSchema = z.object({
 
 type PasswordResetForm = z.infer<typeof PasswordResetFormSchema>;
 
-GoogleSignin.configure({
-  scopes: ['email', 'profile'],
-  webClientId: '227858259368-s9d98824oek9ebdu1scjn8svp2unmsjo.apps.googleusercontent.com'
-});
-
 export function PasswordReset() {
   const [isLoading, setIsLoading] = useState(false);
-  const { navigate, goBack } = useNavigation<NavigationProp<AuthRoutesType>>();
+  const { goBack } = useNavigation<NavigationProp<AuthRoutesType>>();
   const { handleSubmit, control, formState: { errors } } = useForm<PasswordResetForm>({
     resolver: zodResolver(PasswordResetFormSchema),
     mode: 'onChange',

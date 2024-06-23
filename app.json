@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Jord",
-    "slug": "jord",
+    "slug": "Jord",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,8 +20,8 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.m4rcusml.Jord",
       "googleServicesFile": "./google-services.json",
-      "package": "com.m4rcusml.jord",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -32,7 +32,7 @@
     },
     "extra": {
       "eas": {
-        "projectId": "435776ea-99e7-475f-b9ea-21a8d01037a5"
+        "projectId": "080e3a60-9d67-4f52-827e-ea51e5225c48"
       }
     }
   }

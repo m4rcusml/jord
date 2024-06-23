@@ -6,6 +6,7 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { AuthRoutesType } from '../../../routes/auth.routes';
 
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -23,7 +24,7 @@ type LoginForm = z.infer<typeof LoginFormSchema>;
 
 GoogleSignin.configure({
   scopes: ['email', 'profile'],
-  webClientId: '227858259368-s9d98824oek9ebdu1scjn8svp2unmsjo.apps.googleusercontent.com'
+  webClientId: '643875255309-poa21bd5hhc7jv2lmnf3pupum7e0khhe.apps.googleusercontent.com'
 });
 
 export function Login() {
@@ -34,18 +35,45 @@ export function Login() {
     mode: 'onChange',
   });
 
-  async function loginWithGoogle() {
-    try {
-      setIsLoading(true);
-      GoogleSignin.hasPlayServices();
-      const { idToken } = await GoogleSignin.signIn();
-      auth().signInWithCredential(auth.GoogleAuthProvider.credential(idToken))
-    } catch (error) {
-      console.log(error);
-      Alert.alert('Ocorreu um erro', 'Tente novamente mais tarde.')
-      setIsLoading(false);
-    }
-  };
+  function loginWithGoogle() {
+    setIsLoading(true);
+
+    GoogleSignin.hasPlayServices();
+    GoogleSignin.signIn()
+      .then(googleCredentials => {
+        auth()
+          .signInWithCredential(
+            auth.GoogleAuthProvider.credential(googleCredentials.idToken)
+          )
+          .then(async () => {
+            const alreadyRegistered = await (async function verify() {
+              const user = await firestore()
+                .collection('users')
+                .where('uid', '==', auth().currentUser?.uid)
+                .get();
+
+              return user.empty;
+            })();
+
+            if (!alreadyRegistered) return;
+
+            firestore()
+              .collection('users')
+              .add({
+                uid: auth().currentUser?.uid,
+                name: googleCredentials.user.name,
+              })
+              .then(() => {
+                console.log('User added!');
+              });
+          })
+          .catch((error) => console.log(error));
+      })
+      .catch((error) => {
+        console.log(error);
+        setIsLoading(false);
+      });
+  }
 
   async function handleLogin({email, password}: LoginForm) {
     try {

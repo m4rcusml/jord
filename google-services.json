@@ -1,41 +1,41 @@
 {
   "project_info": {
-    "project_number": "227858259368",
-    "project_id": "jord-426819",
-    "storage_bucket": "jord-426819.appspot.com"
+    "project_number": "643875255309",
+    "project_id": "jord-62050",
+    "storage_bucket": "jord-62050.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:227858259368:android:7e24b7f8c902effe72119d",
+        "mobilesdk_app_id": "1:643875255309:android:42d3efc7cda2353f12d144",
         "android_client_info": {
-          "package_name": "com.m4rcusml.jord"
+          "package_name": "com.m4rcusml.Jord"
         }
       },
       "oauth_client": [
         {
-          "client_id": "227858259368-ehd1gk8oon4mc529ojp1rcf169rarogq.apps.googleusercontent.com",
+          "client_id": "643875255309-u96ctsbchr5ohg9aha06m82r5rdlvmfg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.m4rcusml.jord",
-            "certificate_hash": "da624c419935c2ff1f3509cd5974b11a6ea54a5b"
+            "package_name": "com.m4rcusml.Jord",
+            "certificate_hash": "fbec700a1f1d2cec83cc19953c9ad61fd4a24f7c"
           }
         },
         {
-          "client_id": "227858259368-s9d98824oek9ebdu1scjn8svp2unmsjo.apps.googleusercontent.com",
+          "client_id": "643875255309-poa21bd5hhc7jv2lmnf3pupum7e0khhe.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBZyptUNmj1DnHMMLyuKJEebB39LQI907g"
+          "current_key": "AIzaSyDtVCgBf041V8Tg_hY1XmuAlEj00fTL6cg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "227858259368-s0ojvq8jufo8oja1gg0aivuendejjqj6.apps.googleusercontent.com",
+              "client_id": "643875255309-poa21bd5hhc7jv2lmnf3pupum7e0khhe.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
